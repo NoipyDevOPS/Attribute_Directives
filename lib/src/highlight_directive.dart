@@ -6,9 +6,28 @@ import 'package:angular/angular.dart';
 )
 
 class HighlightDirective {
-  HighlightDirective(Element el)
+  final Element el;
+
+  HighlightDirective(this.el);
+
+  @Input()
+  String defaultColor;
+
+  @Input('myHighlight')
+  String highlightColor;
+
+  @HostListener('mouseenter')
+  void onMouseEnter() {
+    highlight(highlightColor ?? defaultColor ?? 'red');
+  }
+
+  @HostListener('mouseleave')
+  void onMouseLeave() {
+    highlight();
+  }
+
+  void highlight ([String color])
   {
-    String color = "yellow";
     el.style.backgroundColor = color;
   }
 }
